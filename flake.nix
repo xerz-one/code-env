@@ -3,10 +3,10 @@
     sysrepo.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
-  outputs = inputs@{
+  outputs = {
     sysrepo,
     ...
-  }:
+  }@inputs:
   with sysrepo.lib;
 
   # Generalized definitions
@@ -36,23 +36,6 @@
       pkgs
     }: pkgs.mkShell.override { stdenv = pkgs.clangStdenv; };
 
-    # just a bit of sugar for mkShell
-    env_gen = {
-      mkShell,
-      packages
-    }: mkShell {
-      inherit packages; 
-    };
-
-    # applied sugar for mkShellClang
-    env-clang_gen = {
-      pkgs,
-      packages
-    }: env_gen {
-      inherit packages;
-      mkShell = mkShellClang { inherit pkgs; };
-    };
-
     # Code environment generator
     #
     # This takes the packages defined at `./tools` and builds a Clang stdenv
@@ -60,21 +43,27 @@
     code-env_gen = {
       pkgs,
       ...
-    }@args: env-clang_gen {
+    }@args: mkShellClang {
       inherit pkgs;
+    } {
       packages = import ./tools args;
     };
 
-    # VSCod* environment generator
+    # A small tool to infer a default executable from a derivation, as in
+    # https://nix.dev/manual/nix/latest/command-ref/new-cli/nix3-run#description
+    getExe = drv:
+      with drv; meta.mainProgram or (pname or (name |> builtins.match ''(.*)-.*''));
+
+    # Launcher environment generator
     #
-    # This can use a pre-existing `mkShell` env and add VSCod* to it
-    vsc-env_gen = {
-      vsc,
+    # This can take a pre-existing `mkShell` env and add a launcher to it
+    launch-env_gen = {
+      launcher,
       env
     }: env.overrideAttrs (final: prev: {
-      nativeBuildInputs = prev.nativeBuildInputs ++ [ vsc ];
+      nativeBuildInputs = prev.nativeBuildInputs ++ [ launcher ];
       shellHook = ''
-        exec ${vsc.executableName}
+        exec ${getExe launcher}
       '';
     });
   in
@@ -98,7 +87,7 @@
       flake     = packages.${system};
 
       code-env  = code-env_gen    { inherit pkgs flake; };
-      vsc-env   = vsc-env_gen     { vsc = flake.vscodium; env = code-env; };
+      vsc-env   = launch-env_gen  { launcher = flake.vscodium; env = code-env; };
     in
     {
       inherit code-env vsc-env;

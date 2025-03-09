@@ -74,7 +74,7 @@
     }: env.overrideAttrs (final: prev: {
       nativeBuildInputs = prev.nativeBuildInputs ++ [ vsc ];
       shellHook = ''
-        exec codium
+        exec ${vsc.executableName}
       '';
     });
   in

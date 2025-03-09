@@ -9,6 +9,9 @@
   pkg-config
   gnumake
 
+  # Shell
+  bashInteractive
+
   # Rust
   rustc
   cargo

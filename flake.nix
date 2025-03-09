@@ -52,7 +52,7 @@
     # A small tool to infer a default executable from a derivation, as in
     # https://nix.dev/manual/nix/latest/command-ref/new-cli/nix3-run#description
     getExe = drv:
-      with drv; meta.mainProgram or (pname or (name |> builtins.match ''(.*)-.*''));
+      drv.meta.mainProgram or (drv.pname or (drv.name |> builtins.match ''(.*)-.*''));
 
     # Launcher environment generator
     #

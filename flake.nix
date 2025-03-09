@@ -28,7 +28,7 @@
         hash = "sha256-TnJ9t1V0qxHWvsevXl1yoIT6f2YuIAw11bwgB3L1zpY=";
       };
       configureFlags = prev.configureFlags |> remove "--enable-check";
-      buildInputs = pkgs.racket.buildInputs;
+      buildInputs = pkgs.racket.buildInputs ++ [ pkgs.libedit ];
     });
 
     # mkShell override for Clang

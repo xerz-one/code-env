@@ -21,12 +21,6 @@
       pkgs
     }:
     pkgs.racket-minimal.overrideAttrs (final: prev: {
-      # TODO: remove version/src override
-      version = "8.16";
-      src = pkgs.fetchurl {
-        url = "https://mirror.racket-lang.org/installers/8.16/racket-minimal-8.16-src.tgz";
-        hash = "sha256-TnJ9t1V0qxHWvsevXl1yoIT6f2YuIAw11bwgB3L1zpY=";
-      };
       configureFlags = prev.configureFlags |> remove "--enable-check";
       buildInputs = pkgs.racket.buildInputs ++ [ pkgs.libedit ];
     });

@@ -1,6 +1,6 @@
 {
   pkgs,
-  flake
+  flake,
 }:
 
 (with pkgs; [
@@ -32,8 +32,8 @@
   # Java
   jdk23
   javaPackages.openjfx23
-]) ++
-(with flake; [
+])
+++ (with flake; [
   # Racket
   racket
 ])

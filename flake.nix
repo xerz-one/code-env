@@ -13,26 +13,11 @@
       sysrepo,
       ...
     }@inputs:
-    with sysrepo.lib;
+    with sysrepo.lib // import tools/racket.nix { lib = sysrepo.lib; };
 
     # Generalized definitions
     let
       forAllSystems = genAttrs systems.flakeExposed;
-
-      # Racket package generator
-      #
-      # It patches `racket-minimal` to add in assumed dependencies,
-      # as well as remove a debug flag that is both wastefully slow and buggy
-      racket_gen =
-        {
-          pkgs,
-        }:
-        pkgs.racket-minimal.overrideAttrs (
-          final: prev: {
-            configureFlags = prev.configureFlags |> remove "--enable-check";
-            buildInputs = pkgs.racket.buildInputs ++ [ pkgs.libedit ];
-          }
-        );
 
       # mkShell override for Clang
       mkShellClang =

@@ -72,7 +72,7 @@
         let
           pkgs = import sysrepo { inherit system; };
 
-          racket = racket_gen { inherit pkgs; };
+          racket = racket_8_17_gen { inherit pkgs; };
           vscodium = pkgs.vscodium;
         in
         {

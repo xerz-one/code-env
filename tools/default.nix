@@ -6,8 +6,12 @@
 (with pkgs; [
   # old school
   clang-tools
+  libllvm
+  binutils
+  xxd
   pkg-config
   gnumake
+  cmake
 
   # Shell
   bashInteractive

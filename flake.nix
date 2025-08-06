@@ -19,12 +19,20 @@
     let
       forAllSystems = genAttrs systems.flakeExposed;
 
-      # mkShell override for Clang
+      # stdenv override with full Clang and Mold
+      stdenv_gen =
+        {
+          pkgs,
+          llvm,
+        }:
+        pkgs.overrideCC llvm.stdenv llvm.clangUseLLVM |> pkgs.useMoldLinker;
+
+      # mkShell override
       mkShellClang =
         {
           pkgs,
         }:
-        pkgs.mkShell.override { stdenv = pkgs.clangStdenv; };
+        pkgs.mkShell.override { stdenv = pkgs.stdenv; };
 
       # Code environment generator
       #
@@ -45,7 +53,7 @@
 
       # A small tool to infer a default executable from a derivation, as in
       # https://nix.dev/manual/nix/latest/command-ref/new-cli/nix3-run#description
-      getExe = drv: drv.meta.mainProgram or (drv.pname or (drv.name |> builtins.match ''(.*)-.*''));
+      getExe = drv: drv.meta.mainProgram or (lib.getName drv);
 
       # Launcher environment generator
       #
@@ -72,11 +80,14 @@
         let
           pkgs = import sysrepo { inherit system; };
 
+          llvm = pkgs.llvmPackages_git;
+          stdenv = stdenv_gen { inherit pkgs llvm; };
+
           racket = racket_8_17_gen { inherit pkgs; };
           vscodium = pkgs.vscodium;
         in
         {
-          inherit racket vscodium;
+          inherit llvm stdenv racket vscodium;
         }
       );
 

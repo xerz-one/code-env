@@ -3,11 +3,16 @@
   flake,
 }:
 
-(with pkgs; [
+(with flake; [
+  # Racket
+  racket
+
   # old school
-  clang-tools
-  libllvm
-  binutils
+  stdenv.cc
+  llvm.clang-tools
+  llvm.libllvm
+])
+++ (with pkgs; [
   xxd
   pkg-config
   gnumake
@@ -36,8 +41,4 @@
   # Java
   jdk23
   javaPackages.openjfx23
-])
-++ (with flake; [
-  # Racket
-  racket
 ])

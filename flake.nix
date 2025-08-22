@@ -83,7 +83,7 @@
           llvm = pkgs.llvmPackages_git;
           stdenv = stdenv_gen { inherit pkgs llvm; };
 
-          racket = racket_8_17_gen { inherit pkgs; };
+          racket = racket_8_18_gen { inherit pkgs; };
           vscodium = pkgs.vscodium;
         in
         {

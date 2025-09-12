@@ -30,6 +30,9 @@
   ghc
   cabal-install
 
+  # Agda
+  agda
+
   # Idris
   idris2
 
@@ -39,6 +42,6 @@
   ocamlPackages.utop
 
   # Java
-  jdk23
-  javaPackages.openjfx23
+  jdk25
+  openjfx25
 ])

@@ -16,6 +16,8 @@
   pkg-config
   gnumake
   cmake
+  meson
+  ninja
   xxd
   ripgrep
   fq

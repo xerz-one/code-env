@@ -13,10 +13,12 @@
   llvm.libllvm
 ])
 ++ (with pkgs; [
-  xxd
   pkg-config
   gnumake
   cmake
+  xxd
+  ripgrep
+  fq
 
   # Shell
   bashInteractive

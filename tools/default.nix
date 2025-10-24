@@ -30,6 +30,9 @@
   cargo
   evcxr
 
+  # Nix
+  nixd
+
   # Haskell
   ghc
   cabal-install

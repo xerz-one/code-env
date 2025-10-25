@@ -28,6 +28,7 @@
   # Rust
   rustc
   cargo
+  rustfmt
   evcxr
 
   # Nix

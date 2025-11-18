@@ -52,10 +52,14 @@
 
   # Erlang
   beam28Packages.erlang
+  beam28Packages.rebar3
   erlang-language-platform
 
   # Gleam
   gleam
+
+  # ECMAScript
+  bun
 
   # Java
   jdk25

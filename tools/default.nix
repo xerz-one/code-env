@@ -30,6 +30,7 @@
   cargo
   rustfmt
   evcxr
+  rust-analyzer
 
   # Nix
   nixd
@@ -48,6 +49,13 @@
   ocaml
   ocamlPackages.ocamlbuild
   ocamlPackages.utop
+
+  # Erlang
+  beam28Packages.erlang
+  erlang-language-platform
+
+  # Gleam
+  gleam
 
   # Java
   jdk25

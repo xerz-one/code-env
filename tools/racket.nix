@@ -19,21 +19,21 @@ let
       }
     );
 
-  # Racket 8.18 definition
-  racket_8_18_gen =
+  # Racket 9.0 definition
+  racket_9_0_gen =
     {
       pkgs,
     }:
     (racket_gen { inherit pkgs; }).overrideAttrs (
       final: prev: {
-        version = "8.18";
+        version = "9.0";
         src = pkgs.fetchurl {
           url = "https://mirror.racket-lang.org/installers/${final.version}/racket-minimal-${final.version}-src.tgz";
-          sha256 = "sha256-JLnPg2UlS0O6wwgZLHgu372GNj3xMixOBjt5ftD322Y=";
+          sha256 = "sha256-LJ3AEqy9mA4Qxg21Bx4eRZfm0SRpgyqApEvqsrYuw/4=";
         };
       }
     );
 in
 {
-  inherit racket_gen racket_8_18_gen;
+  inherit racket_gen racket_9_0_gen;
 }

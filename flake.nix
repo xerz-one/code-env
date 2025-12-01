@@ -13,26 +13,13 @@
       sysrepo,
       ...
     }@inputs:
-    with sysrepo.lib // import tools/racket.nix { lib = sysrepo.lib; };
+    with sysrepo.lib
+    // import tools/racket.nix { lib = sysrepo.lib; }
+    // import tools/llvm.nix { lib = sysrepo.lib; };
 
     # Generalized definitions
     let
       forAllSystems = genAttrs systems.flakeExposed;
-
-      # stdenv override with full Clang and Mold
-      stdenv_gen =
-        {
-          pkgs,
-          llvm,
-        }:
-        pkgs.overrideCC llvm.stdenv llvm.clangUseLLVM |> pkgs.useMoldLinker;
-
-      # mkShell override
-      mkShellClang =
-        {
-          pkgs,
-        }:
-        pkgs.mkShell.override { stdenv = pkgs.stdenv; };
 
       # Code environment generator
       #
@@ -80,14 +67,19 @@
         let
           pkgs = import sysrepo { inherit system; };
 
-          llvm = pkgs.llvmPackages_git;
+          llvm = pkgs.llvmPackages;
           stdenv = stdenv_gen { inherit pkgs llvm; };
 
           racket = racket_9_0_gen { inherit pkgs; };
           vscodium = pkgs.vscodium;
         in
         {
-          inherit llvm stdenv racket vscodium;
+          inherit
+            llvm
+            stdenv
+            racket
+            vscodium
+            ;
         }
       );
 
@@ -104,7 +96,10 @@
           };
         in
         {
-          inherit code-env vsc-env;
+          inherit
+            code-env
+            vsc-env
+            ;
 
           default = vsc-env;
         }

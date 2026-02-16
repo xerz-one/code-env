@@ -67,7 +67,7 @@
         let
           pkgs = import sysrepo { inherit system; };
 
-          llvm = pkgs.llvmPackages;
+          llvm = pkgs.llvmPackages_22;
           stdenv = stdenv_gen { inherit pkgs llvm; };
 
           racket = racket_9_0_gen { inherit pkgs; };

@@ -59,7 +59,7 @@
   gleam
 
   # ECMAScript
-  bun
+  nodejs
 
   # Java
   jdk25

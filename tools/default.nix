@@ -11,6 +11,7 @@
   stdenv.cc
   llvm.clang-tools
   llvm.libllvm
+  llvm.bintools-unwrapped
 ])
 ++ (with pkgs; [
   pkg-config
@@ -59,7 +60,7 @@
   gleam
 
   # ECMAScript
-  bun
+  nodejs
 
   # Java
   jdk25

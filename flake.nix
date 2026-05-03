@@ -70,7 +70,11 @@
           llvm = pkgs.llvmPackages_22;
           stdenv = stdenv_gen { inherit pkgs llvm; };
 
-          racket = racket_9_1_gen { inherit pkgs; };
+          racket = racket_release_gen {
+            inherit pkgs;
+            version = "9.1";
+            hash = "sha256-1o5/OSzIQs8p2u4qipKXpSiBuigMakxhCMAq6MdzV9U=";
+          };
           vscodium = pkgs.vscodium;
         in
         {

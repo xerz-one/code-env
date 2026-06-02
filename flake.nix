@@ -72,8 +72,8 @@
 
           racket = racket_release_gen {
             inherit pkgs;
-            version = "9.1";
-            hash = "sha256-1o5/OSzIQs8p2u4qipKXpSiBuigMakxhCMAq6MdzV9U=";
+            version = "9.2";
+            hash = "sha256-YpJjbuSPhHOtyZET/KI0GRZKoCsw+0ggAauZIkz3MHQ=";
           };
           vscodium = pkgs.vscodium;
         in
